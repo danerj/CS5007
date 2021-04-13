@@ -1,0 +1,253 @@
+INTRODUCTION TO PROGRAMMING CONCEPTS, DATA STRUCTURES 
+Exam #1
+March 3, 2021
+Student = Dane Johnson
+
+
+
+----------------------------------------------
+Part 1: Multiple Choice (30 Marks)
+----------------------------------------------
+
+
+1. Each pass through a loop is called a/an_ _ _ _ _ _ _ _ _ _ _ _ _ _
+a) Enumeration
+b) Iteration
+c) Permutation
+d) Combination
+
+
+The correct answer is [b]
+
+
+
+
+
+
+2. Recursion is a programing technique in which the solution of a problem is achieved by solving_ _ _ _ _ _ _ _ _ _ _ _ _ _
+a) Larger instances of different problems
+b) Larger instances of the same problem
+c) Smaller instances of the same problem
+d) Smaller instances of different problems
+
+
+The correct answer is [c]
+
+
+
+
+
+
+3. In recursion, the condition for which the recursive function will stop calling itself is known as_ _ _ _ _ _ _ _ _ _ _ _ _ _
+a) Best case
+b) Worst case
+c) Base case
+d) First case
+
+
+The correct answer is [c]
+
+
+
+
+
+
+4. What happens if the base condition isn’t defined in a recursive function?
+a) Program gets into an infinite loop
+b) Program runs once
+c) Program runs n number of times where n is the argument given to the function
+d) The function still runs correctly
+
+
+The correct answer is [a]
+
+
+
+
+
+
+5. Which of the following statements is true?
+a) Recursion is always better than iteration
+b) Iteration is always better than recursion
+c) Recursion uses more memory compared to iteration
+d) Recursion uses less memory compared to iteration
+
+
+The correct answer is [c]
+
+
+
+
+
+
+6. Each time a function is invoked, the system stores parameters and local variables in an area of memory, known as_ _ _ _ _ _ _ _ _ _ _ _ _ _, which stores elements in last-in first-out fashion.
+ a) Heap
+ b) Storage area
+ c) Stack
+ d) Array
+
+
+The correct answer is [c]
+
+
+
+
+
+
+7. What do while-loops do?
+a) Repeat a piece of code a given number of times
+b) Repeat a piece of code until a condition is true
+c) Repeat a piece of code until a condition is false
+d) Repeat a piece of code indefinitely
+
+
+The correct answer is [c]
+
+
+
+
+
+
+8. A Python line comment begins with_ _ _ _ _ _ _ _ _ _ _ _ _ _
+a) //
+b) /*
+c) #
+d) $$
+
+
+The correct answer is [c]
+
+
+
+
+
+
+9. In Python, a function_ _ _ _ _ _ _ _ _ _ _ _ _ _
+a) Must have at least one parameter
+b) May have no parameters
+c) Must always have a return statement
+d) Must always have a print statement
+
+
+The correct answer is [b]
+
+
+
+
+
+
+10. The output of the line of code shown below is:_ _ _ _ _ _ _ _ _ _ _ _ _ _
+not(10<20) and not(10>30)
+a) True
+b) False
+c) Error
+d) None
+
+
+The correct answer is [b]
+
+
+
+
+
+
+-------------------------------------------
+Part 2: Code Review (20 Marks)
+-------------------------------------------
+
+
+Is there anything wrong with the following code? If yes, what is the problem? If no, why?
+
+
+
+
+>>> def fun(s):
+        print (s[0])
+        if len(s) == 0:
+                return
+        fun (s[1:len(s)])
+
+
+######## ADD YOUR ANSWER HERE ########
+
+I assume that we intend s to be a list. The first problem is that there is no description explaining what the intended
+output of the program should be so it makes the program difficult to debug. However, it might be that the program is supposed
+to print out each element of a list in order one at a time. As written the program always throws an error because
+
+	(a) If s is empty, s[0] refers to a nonexistent first element of s.
+	(b) If s is not empty, we recursively call fun on a list of length one less than s, which will eventually lead to fun
+		being called on an empty list and producing the error described in (a).
+		
+To fix the program, we could move the 'if' statement to before the print statement. Then if an empty list s is passed into fun,
+the function will just return the None object and terminate without trying to print the nonexistent s[0] (and thereby avoid an
+indexing error). Otherwise if s is not empty the function passes by the 'if' statement, prints s[0] and then moves onto a list
+of length one less than s. Also the return statement has been indented twice into the body of the 'if' statement so we should
+remove one indentation:
+
+# Fixed version of fun
+def fun(s):
+    if len(s) == 0:
+        return
+	print (s[0])
+    fun (s[1:len(s)])
+
+This version of the program prints out each element of a list s if s is nonempty or does not print anything if s is empty.
+Note that no matter whether s is empty of not, this fixed version of fun still returns None. That is, calling fun(s) will
+print out the elements of s (if any) while calling print(fun(s)) will print out 'None' to the terminal.
+
+
+-------------------------------------------------
+Part 3: Iterative Function (25 Marks)
+-------------------------------------------------
+
+
+Given a list L1, write a Python function func1 that returns the reverse of L1 as follows
+
+
+>>> L1 = [1,2,3,4,5,6]
+>>> L2 = func1(L1)
+>>> print (L2)
+[6, 5, 4, 3, 2, 1]
+
+
+
+
+Note that func1 must be coded as an *iterative function*.
+
+
+######## ADD YOUR CODE OF FUNC1 HERE ########
+
+def func1(L1):
+    L2 = []
+    for i in range(len(L1)-1,-1,-1):
+        L2.append(L1[i])
+    return L2
+
+---------------------------------------------------
+Part 4: Recursive Function (25 Marks)
+---------------------------------------------------
+
+
+Given a list L1, write a Python function func2 that returns the reverse of L1 as follows
+
+
+>>> L1 = [1,2,3,4,5,6]
+>>> L2 = func2(L1)
+>>> print (L2)
+[6, 5, 4, 3, 2, 1]
+
+
+Note that func2 must be coded as a *recursive function*.
+
+
+######## ADD YOUR CODE OF FUNC2 HERE ########
+
+def func2(lst):
+    if len(lst) <= 1:
+        return lst
+    else:
+        return [lst[-1]] + func2(lst[:len(lst)-1])
+
+
+
+
